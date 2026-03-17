@@ -1,15 +1,1355 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="NEXUS: Chronicles - A revolutionary cyberpunk RPG experience">
     <meta name="theme-color" content="#000000">
     <title>NEXUS: Chronicles - Official Site</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1e3f 50%, #0d1a2a 100%);
+            color: #e4e6eb;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f1419;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00d4ff;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: #00d4ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e4e6eb;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #0099ff);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .steam-btn {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            border-radius: 5px;
+            font-weight: 700;
+            color: #0a0e27;
+            transition: all 0.3s;
+        }
+
+        .steam-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Pages Container */
+        .page {
+            min-height: 100vh;
+        }
+
+        /* HOME PAGE */
+        .home {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1e3f 50%, #0d1a2a 100%);
+            min-height: 100vh;
+        }
+
+        .hero {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content {
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff, #00f0ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #b8b8d1;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            color: #0a0e27;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00d4ff;
+            border: 2px solid #00d4ff;
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), inset 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .btn-large {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+        }
+
+        .hero-visual {
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .glitch-box {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 30px rgba(0, 212, 255, 0.1);
+        }
+
+        .glitch-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .glitch-content {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: #00d4ff;
+            text-align: center;
+            line-height: 2;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 1;
+        }
+
+        .glitch-content span {
+            animation: flicker 0.3s infinite;
+        }
+
+        .glitch-content span:nth-child(1) { animation-delay: 0s; }
+        .glitch-content span:nth-child(2) { animation-delay: 0.2s; }
+        .glitch-content span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: rgba(26, 30, 63, 0.5);
+            border-top: 2px solid rgba(0, 212, 255, 0.1);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 153, 255, 0.02));
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        .feature-card:nth-child(2) .feature-icon { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) .feature-icon { animation-delay: 0.4s; }
+        .feature-card:nth-child(4) .feature-icon { animation-delay: 0.6s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .feature-card p {
+            color: #b8b8d1;
+            line-height: 1.6;
+        }
+
+        /* Gameplay Section */
+        .gameplay {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gameplay h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gameplay-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .gameplay-text h3 {
+            font-size: 2rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .gameplay-text p {
+            color: #b8b8d1;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .gameplay-text ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .gameplay-text li {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .preview-box {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 153, 255, 0.02));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            color: #00d4ff;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .preview-scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+
+        .preview-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Media Gallery */
+        .media {
+            padding: 6rem 2rem;
+            background: rgba(26, 30, 63, 0.3);
+            border-top: 2px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .media h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: rgba(0, 212, 255, 0.5);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 153, 255, 0.02));
+            border-top: 2px solid rgba(0, 212, 255, 0.2);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta p {
+            font-size: 1.3rem;
+            color: #b8b8d1;
+            margin-bottom: 2rem;
+        }
+
+        /* STEAM PAGE */
+        .steam-page {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1e3f 50%, #0d1a2a 100%);
+            min-height: 100vh;
+            color: #b8b8d1;
+        }
+
+        /* Steam Header */
+        .steam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(10, 14, 39, 0.95);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px);
+            margin-top: 80px;
+        }
+
+        .back-btn {
+            color: #00d4ff;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        /* Steam Hero */
+        .steam-hero {
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+        }
+
+        .steam-hero-content h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .steam-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.3rem;
+        }
+
+        .reviews {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        /* Steam Container */
+        .steam-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .game-info-panel {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .game-main {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tabs */
+        .tabs-section {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: transparent;
+            color: #b8b8d1;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: #00d4ff;
+        }
+
+        .tab.active {
+            border-bottom-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        /* Game Description */
+        .game-description h2 {
+            color: #00d4ff;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .game-description p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #b8b8d1;
+        }
+
+        .game-description h3 {
+            color: #00d4ff;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .features-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            color: #00d4ff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background: rgba(0, 212, 255, 0.05);
+            padding-left: 1rem;
+        }
+
+        /* Requirements */
+        .requirements {
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .requirements h3 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .requirement-section h4 {
+            color: #00f0ff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .requirement-section ul {
+            list-style: none;
+        }
+
+        .requirement-section li {
+            padding: 0.5rem 0;
+            color: #b8b8d1;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        /* Screenshots */
+        .screenshots-section {
+            margin-top: 3rem;
+        }
+
+        .screenshots-section h3 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .screenshot {
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .screenshot:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(0, 212, 255, 0.5);
+            font-weight: 600;
+        }
+
+        /* Videos */
+        .videos-section {
+            margin-top: 3rem;
+        }
+
+        .videos-section h3 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .video {
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .video:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(0, 212, 255, 0.5);
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        /* Sidebar */
+        .game-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .purchase-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 100px;
+        }
+
+        .game-poster {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.05));
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .poster-placeholder {
+            color: rgba(0, 212, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .price-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00d4ff;
+            text-align: center;
+        }
+
+        .btn-buy {
+            padding: 1rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            color: #0a0e27;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-wishlist {
+            padding: 0.8rem;
+            background: transparent;
+            color: #00d4ff;
+            font-weight: 600;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-wishlist:hover {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .info-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-item span {
+            color: #b8b8d1;
+            font-size: 0.9rem;
+        }
+
+        .info-item strong {
+            color: #00d4ff;
+            font-weight: 700;
+        }
+
+        /* Stats Box */
+        .stats-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-box h4 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .stat span {
+            color: #b8b8d1;
+        }
+
+        .stat strong {
+            color: #00f0ff;
+            font-size: 1.1rem;
+        }
+
+        /* Languages Box */
+        .languages-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .languages-box h4 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .languages-box p {
+            color: #b8b8d1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(0, 212, 255, 0.1);
+            color: #909099;
+            background: rgba(10, 14, 39, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00f0ff;
+            text-decoration: underline;
+        }
+
+        .steam-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid rgba(0, 212, 255, 0.1);
+            color: #909099;
+            background: rgba(10, 14, 39, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .gameplay-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .requirements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-info-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .purchase-box {
+                position: static;
+            }
+
+            .steam-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .steam-hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo" onclick="showHome()">
+                <span class="logo-icon">◆</span> NEXUS: Chronicles
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showHome(); return false;">Features</a>
+                <a href="#" onclick="showHome(); return false;">Gameplay</a>
+                <a href="#" onclick="showHome(); return false;">Media</a>
+                <a href="#" class="steam-btn" onclick="showSteam(); return false;">View on Steam</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="homePage" class="page home">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">NEXUS: Chronicles</h1>
+                <p class="hero-subtitle">Dive into the digital abyss. Where every choice echoes through eternity.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Play Now</button>
+                    <button class="btn btn-secondary">Watch Trailer</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="glitch-box">
+                    <div class="glitch-content">
+                        <span>█ N3XUS</span>
+                        <span>SYSTEM READY</span>
+                        <span>&gt; INITIALIZING...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2>Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Dynamic Cyberpunk World</h3>
+                    <p>Explore a living, breathing metacomverse packed with secrets and possibilities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Revolutionary Gameplay</h3>
+                    <p>Master cutting-edge combat mechanics blending strategy with real-time action.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multiplayer Nexus</h3>
+                    <p>Connect with players worldwide in cooperative and competitive modes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔮</div>
+                    <h3>Customization Unleashed</h3>
+                    <p>Create your own character with unlimited cybernetic enhancements.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gameplay" class="gameplay">
+            <h2>Immersive Gameplay</h2>
+            <div class="gameplay-content">
+                <div class="gameplay-text">
+                    <h3>Experience the Future</h3>
+                    <p>NEXUS: Chronicles combines the best of sci-fi storytelling with cutting-edge game mechanics. Engage in intense battles, unravel deep mysteries, and make choices that matter.</p>
+                    <ul>
+                        <li>✓ 50+ hours of engaging campaign</li>
+                        <li>✓ 100+ side quests and mysteries</li>
+                        <li>✓ Full character customization</li>
+                        <li>✓ Real-time multiplayer raids</li>
+                    </ul>
+                </div>
+                <div class="gameplay-preview">
+                    <div class="preview-box">
+                        <div class="preview-scanlines"></div>
+                        <div class="preview-text">
+                            NEXUS INTERFACE v3.2.1<br/>
+                            Loading Game Preview...<br/>
+                            Connection Established ✓
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="media" class="media">
+            <h2>Media Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><div class="gallery-placeholder">Screenshot 1</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">Screenshot 2</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">Screenshot 3</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">Screenshot 4</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">Screenshot 5</div></div>
+                <div class="gallery-item"><div class="gallery-placeholder">Screenshot 6</div></div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Ready to Enter NEXUS?</h2>
+            <p>Join millions of players in the most immersive cyberpunk experience</p>
+            <button class="btn btn-primary btn-large" onclick="showSteam()">Get on Steam</button>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 NEXUS Entertainment. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- STEAM PAGE -->
+    <div id="steamPage" class="page steam-page hidden">
+        <header class="steam-header">
+            <div class="logo" onclick="showHome()">NEXUS: Chronicles</div>
+            <a href="#" class="back-btn" onclick="showHome(); return false;">← Back to Official Site</a>
+        </header>
+
+        <section class="steam-hero">
+            <div class="steam-hero-content">
+                <h1>NEXUS: Chronicles</h1>
+                <div class="steam-rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="reviews">98% Positive (15.2K Reviews)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="steam-container">
+            <div class="game-info-panel">
+                <div class="game-main">
+                    <div class="tabs-section">
+                        <button class="tab active">Overview</button>
+                        <button class="tab">Reviews</button>
+                        <button class="tab">Screenshots</button>
+                        <button class="tab">Community</button>
+                    </div>
+
+                    <div class="game-description">
+                        <h2>About This Game</h2>
+                        <p>Welcome to NEXUS: Chronicles, a revolutionary cyberpunk RPG that will transport you to a neon-soaked world of endless possibilities. In a future where the line between reality and the digital realm has blurred, you are humanity's last hope.</p>
+                        <p>Engage in thrilling battles across futuristic environments, forge alliances with unforgettable characters, and uncover the mysteries that threaten to consume both worlds. Your choices matter, and every decision will shape the fate of the NEXUS.</p>
+
+                        <h3>Key Features:</h3>
+                        <ul class="features-list">
+                            <li>✓ Single-player Campaign</li>
+                            <li>✓ Multiplayer Co-op</li>
+                            <li>✓ Competitive PvP Modes</li>
+                            <li>✓ NFT Character Trading</li>
+                            <li>✓ Cross-platform Play</li>
+                            <li>✓ Regular Content Updates</li>
+                        </ul>
+
+                        <div class="requirements">
+                            <h3>System Requirements</h3>
+                            <div class="requirements-grid">
+                                <div class="requirement-section">
+                                    <h4>MINIMUM:</h4>
+                                    <ul>
+                                        <li>OS: Windows 10 64-bit</li>
+                                        <li>Processor: Intel i5-8400</li>
+                                        <li>Memory: 8 GB RAM</li>
+                                        <li>Graphics: GTX 1660</li>
+                                        <li>Storage: 80 GB</li>
+                                    </ul>
+                                </div>
+                                <div class="requirement-section">
+                                    <h4>RECOMMENDED:</h4>
+                                    <ul>
+                                        <li>OS: Windows 10/11 64-bit</li>
+                                        <li>Processor: Intel i7-10700K</li>
+                                        <li>Memory: 16 GB RAM</li>
+                                        <li>Graphics: RTX 3080</li>
+                                        <li>Storage: 100 GB SSD</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screenshots-section">
+                        <h3>Screenshots</h3>
+                        <div class="screenshots-grid">
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 1</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 2</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 3</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 4</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 5</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 6</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 7</div></div>
+                            <div class="screenshot"><div class="screenshot-placeholder">Screenshot 8</div></div>
+                        </div>
+                    </div>
+
+                    <div class="videos-section">
+                        <h3>Videos</h3>
+                        <div class="videos-grid">
+                            <div class="video"><div class="video-placeholder">▶ Video 1</div></div>
+                            <div class="video"><div class="video-placeholder">▶ Video 2</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="game-sidebar">
+                    <div class="purchase-box">
+                        <div class="game-poster"><div class="poster-placeholder">GAME POSTER</div></div>
+                        <div class="price-section">
+                            <span class="price">$49.99</span>
+                            <button class="btn-buy">Add to Cart</button>
+                            <button class="btn-wishlist">♡ Add to Wishlist</button>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-item">
+                                <span>Release Date:</span>
+                                <strong>2025</strong>
+                            </div>
+                            <div class="info-item">
+                                <span>Platform:</span>
+                                <strong>Windows, macOS, Linux</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-box">
+                        <h4>Game Stats</h4>
+                        <div class="stat">
+                            <span>Players Online</span>
+                            <strong>127.4K</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Peak Players</span>
+                            <strong>486.2K</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Achievements</span>
+                            <strong>156</strong>
+                        </div>
+                    </div>
+
+                    <div class="languages-box">
+                        <h4>Languages Supported</h4>
+                        <p>English, Spanish, French, German, Italian, Japanese, Chinese, Russian, and more.</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <footer class="steam-footer">
+            <p>© 2026 NEXUS Entertainment. All rights reserved. Steam is a trademark of Valve Corporation.</p>
+        </footer>
+    </div>
+
+    <script>
+        function showHome() {
+            document.getElementById('homePage').classList.remove('hidden');
+            document.getElementById('steamPage').classList.add('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function showSteam() {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('steamPage').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
 </html>
