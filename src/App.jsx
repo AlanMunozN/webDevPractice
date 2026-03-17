@@ -1,16 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, HashRouter } from 'react-router-dom'
 import Home from './pages/Home'
 import Steam from './pages/Steam'
 import './App.css'
 
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/steam" element={<Steam />} />
       </Routes>
-    </Router>
+    </HashRouter>
   )
 }
 
